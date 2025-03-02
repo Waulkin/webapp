@@ -17,4 +17,20 @@ class Inventory(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     last_updated = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-# Add more models for Orders and Shipments as needed
+# Add more models for Orders and Shipments
+
+class Order(db.Model):
+    order_id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('inventory.item_id'), nullable=False)
+    store_id = db.Column(db.Integer, db.ForeignKey('store.store_id'), nullable=False)
+    quantity_ordered = db.Column(db.Integer, nullable=False)
+    order_date = db.Column(db.DateTime, default=db.func.current_timestamp())
+    status = db.Column(db.String(50), nullable=False, default='Pending')
+
+class Shipment(db.Model):
+    shipment_id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('inventory.item_id'), nullable=False)
+    store_id = db.Column(db.Integer, db.ForeignKey('store.store_id'), nullable=False)
+    quantity_shipped = db.Column(db.Integer, nullable=False)
+    expected_arrival = db.Column(db.DateTime, nullable=False)
+    status = db.Column(db.String(50), nullable=False, default='In Transit')
