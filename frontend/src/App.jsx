@@ -8,15 +8,15 @@ import Inventory from './Inventory';
 
 function App() {
   return (
-    <Router>
-        <><Navigation /><div className="Content">
+    
+        <Router><Navigation /><div className="Content">
       <h1>Web App Placeholder Name</h1>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/user" element={<User />} />
         <Route path="/inventory" element={<Inventory />} />
         </Routes>
-    </div></></Router>
+    </div></Router>
   );
 }
 export default App
