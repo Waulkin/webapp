@@ -61,7 +61,7 @@ def delete_user(user_id):
 
     return jsonify({"message": "User deleted!"}), 200
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 @cross_origin()
 def serve(): 
     return send_from_directory(app.static_folder, 'index.html')
