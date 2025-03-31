@@ -1,8 +1,7 @@
 
-from flask import request, jsonify
+from flask import request, jsonify, send_from_directory
 from config import app, db
 from models import User
-from flask.helpers import send_from_directory
 from flask_cors import cross_origin
 
 @app.route("/users", methods=["GET"])
@@ -61,13 +60,13 @@ def delete_user(user_id):
 
     return jsonify({"message": "User deleted!"}), 200
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 @cross_origin()
 def serve(): 
-    return send_from_directory('frontend/dist', 'index.html')
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-    app.run(debug=True)
+    app.run()
