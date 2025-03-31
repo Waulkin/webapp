@@ -5,11 +5,11 @@ const Navigation = () => {
             <h1>Navigation Placeholder Name</h1>
             <div className="nav-links">
             
-                <Link to="/">Home</Link>
+                <Link to="app/">Home</Link>
                 &nbsp;&nbsp;&nbsp;
-                <Link to="/user">User</Link>
+                <Link to="app/user">User</Link>
                 &nbsp;&nbsp;&nbsp;
-                <Link to="/inventory">Inventory</Link>
+                <Link to="app/inventory">Inventory</Link>
             </div>
         </nav>
     );
