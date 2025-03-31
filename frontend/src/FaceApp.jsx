@@ -7,13 +7,11 @@ import  App  from './App';
    
 function FaceApp() {
   return (
-    <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/app/*" element={<App />} />
 
-      </Routes>
-    </BrowserRouter>
+      </Routes>  
   );
 }
 export default FaceApp

@@ -9,7 +9,7 @@ import Inventory from './Inventory';
 function App() {
   return (
     
-        <><Navigation /><div className="Content">
+<><Navigation /><div className="Content">
       <h1>Web App Placeholder Name</h1>
       <Routes>
         <Route path="/" element={<Home />} />
