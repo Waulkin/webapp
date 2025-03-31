@@ -4,6 +4,7 @@ from config import app, db
 from models import User
 from flask_cors import cross_origin
 
+
 @app.route("/users", methods=["GET"])
 def get_users():
     users = User.query.all()
