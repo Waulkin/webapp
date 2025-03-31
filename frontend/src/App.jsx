@@ -12,9 +12,9 @@ function App() {
 <><Navigation /><div className="Content">
       <h1>Web App Placeholder Name</h1>
       <Routes>
-        <Route path="app/" element={<Home />} />
-        <Route path="app/user" element={<User />} />
-        <Route path="app/inventory" element={<Inventory />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/user" element={<User />} />
+        <Route path="/inventory" element={<Inventory />} />
         </Routes>
     </div></>
   );
