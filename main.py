@@ -64,7 +64,7 @@ def delete_user(user_id):
 @app.route('/', methods=['GET'])
 @cross_origin()
 def serve(): 
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory('frontend/dist', 'index.html')
 
 if __name__ == '__main__':
     with app.app_context():
