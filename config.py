@@ -14,8 +14,5 @@ def set_header(response):
     return response
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-@app.route('/')
-@cross_origin()
-def serve(): 
-    return send_from_directory(app.static_folder, 'index.html')
+
 db = SQLAlchemy(app)
