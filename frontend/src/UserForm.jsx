@@ -13,7 +13,7 @@ const UserForm = ({ existingUser = {}, updateCallback }) => {
             role,
             email
         }
-        const url = "http://127.0.0.1:10000/" + (updating ? `update_user/${existingUser.user_id}` : "create_user")
+        const url = "https://webapp-ldfa.onrender.com/" + (updating ? `update_user/${existingUser.user_id}` : "create_user")
         const options = {
             method: updating ? "PATCH" : "POST",
             headers: {

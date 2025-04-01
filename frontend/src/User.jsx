@@ -13,7 +13,7 @@ function User() {
   }, []);
 
   const fetchUsers = async () => {
-    const response = await fetch("http://127.0.0.1:10000/users");
+    const response = await fetch("https://webapp-ldfa.onrender.com/users");
     const data = await response.json();
     setUsers(data.users);
   };
