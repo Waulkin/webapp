@@ -6,7 +6,7 @@ const UserList = ({ users, updateUser, updateCallback }) => {
             const options = {
                 method: "DELETE"
             }
-            const response = await fetch(`http://127.0.0.1:5000/delete_user/${user_id}`, options)
+            const response = await fetch(`http://127.0.0.1:10000/delete_user/${user_id}`, options)
             if (response.status === 200) {
                 updateCallback()
             } else {
