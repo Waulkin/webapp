@@ -72,15 +72,16 @@ def get_inventory():
 @app.route("/create_inventory", methods=["POST"])
 def create_inventory():
     # Create a new inventory item
-    name = request.json.get("item_name")
+    item_name = request.json.get("item_name")
     quantity = request.json.get("quantity")
-
-    if not name: 
-        return jsonify({"message": "Name is required"}), 400
+    
     if quantity is None:
         return jsonify({"message": "Quantity is required"}), 400
+    if not item_name: 
+        return jsonify({"message": "Name is required"}), 400
+    
 
-    new_item = Inventory(name=name, quantity=quantity)
+    new_item = Inventory(item_name=item_name, quantity=quantity)
     try:
         db.session.add(new_item)
         db.session.commit()
@@ -127,7 +128,6 @@ def serve():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.drop_all()
-        db.create_all()
+        db.create_all()  # Create database tables if they don't exist
 
     app.run()

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import InventoryForm from './InventoryForm';
+import InventoryList from './InventoryList';
 
 
 function Inventory() {
   const [inventoryData, setInventoryData] = useState([]); // State to hold inventory data
-
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [chartInstance, setChartInstance] = useState(null); // State to hold the Chart.js instance
+  const [currentItem, setCurrentItem] = useState({}); // State to hold the current item being edited
   // Fetch inventory data from the backend
   const fetchInventory = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/inventory");
+      const response = await fetch("https://webapp-ldfa.onrender.com/inventory");
       const data = await response.json();
       setInventoryData(data.inventory); // Assuming the response has an 'inventory' field
     } catch (error) {
@@ -18,6 +21,12 @@ function Inventory() {
 
   // Create or update the chart when inventoryData changes
   useEffect(() => {
+if (chartInstance) {
+      // If chartInstance exists, destroy it before creating a new one
+      chartInstance.destroy();
+    }
+    
+
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
     script.async = true;
@@ -26,10 +35,10 @@ function Inventory() {
       // Initialize the chart once the script is loaded
       const ctx = document.getElementById('myChart');
       if (ctx) {
-        new Chart(ctx, {
+        const newChart = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: inventoryData.map(item => item.name), // Item names
+            labels: inventoryData.map(item => item.item_name), // Item names
             datasets: [{
               label: 'Inventory Quantity',
               data: inventoryData.map(item => item.quantity), // Item quantities
@@ -44,8 +53,9 @@ function Inventory() {
             }
           }
         });
+        setChartInstance(newChart);
       }
-    };
+    }, [inventoryData]; // Re-run this effect whenever inventoryData changes
 
     document.body.appendChild(script);
 
@@ -55,34 +65,49 @@ function Inventory() {
     };
   }, [inventoryData]); // Re-run this effect whenever inventoryData changes
 
-  // Handle editing or updating inventory items
-  const handleUpdate = (item) => {
-    // Example: You can navigate to an edit page or open a form to update the inventory item
-    console.log("Edit item", item);
-  };
-
   // Load inventory data when the component mounts
   useEffect(() => {
     fetchInventory();
   }, []);
 
+
+
+  const openEditModal = (item) => {
+    if (isModalOpen) return
+    setCurrentItem(item)
+    setIsModalOpen(true)
+  }
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setCurrentItem({})
+  }
+  const onUpdate = () => {
+    closeModal();
+    fetchInventory(); // Refresh the inventory list after update
+  }
   return (
     <div>
       <h2>Inventory Management</h2>
-      <canvas id="myChart" width="600" height="400"></canvas>
+      <canvas id="myChart" width="145" height="35"></canvas>
       <p>Manage your inventory items below:</p>
       {/* Render the InventoryForm component to add or update inventory items */}
       <InventoryForm updateCallback={fetchInventory} /> {/* Use real callback to refresh the inventory list */}
 
       <h3>Current Inventory</h3>
-      <ul>
-        {inventoryData.map(item => (
-          <li key={item.item_id}>
-            {item.name}: {item.quantity}
-            <button onClick={() => handleUpdate(item)}>Edit</button>
-          </li>
-        ))}
-      </ul>
+     <InventoryList
+        inventory={inventoryData} 
+        updateInventory={openEditModal} // Pass the function to open the edit modal
+      updateCallback={onUpdate}/>
+
+      {/* Modal for editing inventory item */}
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <InventoryForm existingItem={currentItem} updateCallback={onUpdate} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

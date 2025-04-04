@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const InventoryForm = ({ existingItem = {}, updateCallback }) => {
-    const [name, setName] = useState(existingItem.name || "");
+    const [item_name, setName] = useState(existingItem.item_name || "");
     const [quantity, setQuantity] = useState(existingItem.quantity || "");
 
     const updating = Object.entries(existingItem).length !== 0;
@@ -10,11 +10,11 @@ const InventoryForm = ({ existingItem = {}, updateCallback }) => {
         e.preventDefault();
 
         const data = {
-            name,
+            item_name,
             quantity: parseInt(quantity, 10) // Ensure quantity is a number
         };
 
-        const url = "http://127.0.0.1:5000/" + (updating ? `update_inventory/${existingItem.item_id}` : "create_inventory")
+        const url = "https://webapp-ldfa.onrender.com/" + (updating ? `update_inventory/${existingItem.item_id}` : "create_inventory")
 
         const options = {
             method: updating ? "PATCH" : "POST",
@@ -31,17 +31,19 @@ const InventoryForm = ({ existingItem = {}, updateCallback }) => {
             alert(responseData.message);
         } else {
             updateCallback(); // This will trigger the parent component to re-fetch or update the data
+            setName(""); // Clear the item name input
+            setQuantity(""); // Clear the quantity input
         }
     };
 
     return (
         <form onSubmit={onSubmit}>
             <div>
-                <label htmlFor="name">Item Name:</label>
+                <label htmlFor="item_name">Item Name:</label>
                 <input
                     type="text"
-                    id="name"
-                    value={name}
+                    id="item_name"
+                    value={item_name}
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
