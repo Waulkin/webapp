@@ -1,3 +1,29 @@
 input, button, label {
   margin-top: 10px;
 }
+
+body{
+  background-color: #f3f2ed;
+  /*tan color code hsla(37, 44%, 85%, 1)*/
+}
+
+.Content h1{ 
+  text-align: center;
+}
+
+.navigation{
+  background-color: hsla(206, 23%, 76%, 1);
+  padding: 20px;
+}
+
+.nav-links a{
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  padding: 20px;
+}
+
+a:hover{
+  background-color: rgb(154, 173, 188);
+}
+
