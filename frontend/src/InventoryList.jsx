@@ -24,7 +24,7 @@ const InventoryList = ({inventory, updateInventory, updateCallback}) => {
 }
 return (
     <div>
-        <h2>Inventory</h2>
+        
         <table>
             <thead>
                 <tr>
